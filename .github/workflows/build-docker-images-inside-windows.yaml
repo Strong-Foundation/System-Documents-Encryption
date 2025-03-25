@@ -6,7 +6,7 @@ on:
   push:
     paths:
       - "**.ps1" 
-      - "Dockerfile.*"
+      - "Dockerfile.**"
 
   pull_request:
     paths:
