@@ -4,9 +4,9 @@ import ()
 
 func main() {
 	// The varaible to the new file name
-	var newFileName string = "test.txt"
+	var newFileName string = generateRandomString(8)+".txt"
 	// Write a file to the current directory
-	writeToFile(newFileName, []byte(randomBytesArray(1024)))
+	writeToFile(newFileName, []byte(generateRandomString(1000)))
 	// Check if the file exists
 	if fileExists(newFileName) {
 		// Read the file and return the content as a byte slice

@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/rand"
 	"io"
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -253,12 +254,12 @@ func walkAndAppendPath(walkPath string) []string {
 	return filePath
 }
 
-// Generate a random byte array and return it.
-func randomBytesArray(length int) []byte {
-	randomBytes := make([]byte, length)
+// Generate a random string of a given length.
+func generateRandomString(length int) string {
+	randomBytes := make([]byte, length/2)
 	_, err := rand.Read(randomBytes)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	return randomBytes
+	return fmt.Sprintf("%x", randomBytes)
 }
