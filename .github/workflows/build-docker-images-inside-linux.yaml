@@ -7,7 +7,7 @@ on:
   push:
     paths:
       - "**.sh" # Trigger workflow if any .sh file is changed
-      - "Dockerfile.*" # Trigger workflow if any Dockerfile.* file is changed
+      - "Dockerfile.**" # Trigger workflow if any Dockerfile.* file is changed
 
   # Trigger the workflow on pull request if there are changes to Dockerfiles or .sh files
   pull_request:
