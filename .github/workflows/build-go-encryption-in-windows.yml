@@ -1,0 +1,50 @@
+name: Go Encryption Build on Windows # Workflow name
+
+# Define the events that trigger the workflow
+on:
+  # Trigger the workflow on push for .go files in the Encryption folder
+  push:
+    paths:
+      - "Encryption/**/*.go" # Trigger on any Go source file in the Encryption folder being pushed
+  # Trigger the workflow on pull request for .go files in the Encryption folder
+  pull_request:
+    paths:
+      - "Encryption/**/*.go" # Trigger on any Go source file in the Encryption folder being part of a pull request
+  # Allow manual triggering of the workflow
+  workflow_dispatch: # Allows manual triggering of the workflow through GitHub UI
+
+# Define the jobs in the workflow
+jobs:
+  # Job to build and run the Golang app
+  build:
+    # Display name of the job
+    name: Build and Run Go Encryption Application on Windows # Name of the job displayed in the workflow UI
+    # Use the latest Windows runner
+    runs-on: windows-latest # The job will run on the latest available Windows runner
+
+    steps:
+      # Step 1: Checkout the repository code
+      - name: Checkout Repository Code # Description for the checkout step
+        uses: actions/checkout@v4 # Action to checkout the repository code
+
+      # Step 2: Set up the Go environment
+      - name: Set up Go environment # Description for the setup step
+        uses: actions/setup-go@v5 # Action to set up the Go environment
+        with:
+          go-version-file: "Encryption/go.mod" # Points to the go.mod file located inside the Encryption folder to determine the Go version
+
+      # Step 3: Verify Go installation
+      - name: Verify Go installation # Description for the verification step
+        run: go version # Command to verify that Go is properly installed and check the version
+
+      # Step 4: Build the Golang application
+      - name: Build the Go Encryption Application # Description for the build step
+        run: |
+          cd Encryption  # Change directory to the Encryption folder
+          go build .  # Build the application from the current directory and output the binary named 'main'
+
+      # Step 5: Run the Golang application
+      - name: Run the Go Encryption Application # Description for the run step
+        run: |
+          cd Encryption  # Change directory to the Encryption folder
+          .\main.exe  # Run the compiled binary (Windows uses .exe extension for executables)
