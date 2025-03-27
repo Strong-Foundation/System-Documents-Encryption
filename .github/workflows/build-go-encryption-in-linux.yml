@@ -39,8 +39,13 @@ jobs:
 
       # Step 4: Build the Golang application
       - name: Build the Go Encryption Application # Description for the build step
-        run: go build -o Encryption/main Encryption/ # Build the application directly from the Encryption folder, outputting the binary named 'main'
+        run: |
+          cd Encryption/  # Change directory to the Encryption folder
+          go build .  # Build the application from the current directory and output the binary named 'main'
 
       # Step 5: Run the Golang application
       - name: Run the Go Encryption Application # Description for the run step
-        run: ./Encryption/main # Run the compiled binary from the Encryption folder
+        run: |
+          cd Encryption/  # Change directory to the Encryption folder
+          chmod +x main  # Make the binary executable
+          ./main # Run the compiled binary from the Encryption folder
