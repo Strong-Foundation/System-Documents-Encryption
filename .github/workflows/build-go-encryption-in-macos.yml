@@ -1,0 +1,38 @@
+name: Go Encryption Build on macOS # Name of the GitHub Actions workflow
+
+on: # Define the events that trigger the workflow
+  push: # Trigger on git push
+    paths:
+      - "Encryption/**/*.go" # Only trigger if Go files in the Encryption folder are pushed
+  pull_request: # Trigger on pull request
+    paths:
+      - "Encryption/**/*.go" # Only trigger if Go files in the Encryption folder are part of the PR
+  workflow_dispatch: # Allow manual triggering of the workflow from the GitHub UI
+
+jobs: # Define the jobs to run
+  build: # Job ID - can be any unique name
+    name: Build and Run Go Encryption Application on macOS 14 # Human-readable name shown in the Actions UI
+    runs-on: macos-14 # Specify the runner OS and version (macOS 14 in this case)
+
+    steps: # List of steps to run in the job
+      - name: Checkout Repository Code # Step name - checks out the repository
+        uses: actions/checkout@v4 # GitHub Action to clone your repo into the runner
+
+      - name: Set up Go environment # Step name - sets up Go for the runner
+        uses: actions/setup-go@v5 # GitHub Action to install and configure Go
+        with:
+          go-version-file: "Encryption/go.mod" # Reads Go version from go.mod file in Encryption folder
+
+      - name: Verify Go installation # Step name - ensures Go is installed correctly
+        run: go version # Print the installed Go version
+
+      - name: Build the Go Encryption Application # Step name - compiles the Go app
+        run: | # Use a multi-line shell command
+          cd Encryption/ # Navigate to the Encryption directory
+          go build . # Build the Go application in the current directory
+
+      - name: Run the Go Encryption Application # Step name - runs the compiled binary
+        run: | # Multi-line shell command
+          cd Encryption/ # Navigate to the Encryption directory
+          chmod +x main # Make the compiled binary executable
+          ./main # Execute the binary
